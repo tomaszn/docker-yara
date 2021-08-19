@@ -1,6 +1,6 @@
 FROM alpine:3.12
 
-LABEL maintainer "https://github.com/blacktop"
+LABEL maintainer "https://github.com/tomaszn"
 
 ENV YARA_VERSION 4.0.2
 ENV YARA_PY_VERSION 4.0.2

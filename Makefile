@@ -1,6 +1,6 @@
-REPO=blacktop/docker-yara
-ORG=blacktop
-NAME=yara
+REPO=tomaszn/docker-yara
+ORG=tomaszn
+NAME=docker-yara
 BUILD ?=$(shell cat LATEST)
 LATEST ?=$(shell cat LATEST)
 
@@ -45,19 +45,6 @@ ssh: ## SSH into docker image
 .PHONY: stop
 stop: ## Kill running docker containers
 	@docker rm -f $(NAME) || true
-
-.PHONY: circle
-circle: ci-size ## Get docker image size from CircleCI
-	@sed -i.bu 's/docker%20image-.*-blue/docker%20image-$(shell cat .circleci/SIZE)-blue/' README.md
-	@echo "===> Image size is: $(shell cat .circleci/SIZE)"
-
-ci-build:
-	@echo "===> Getting CircleCI build number"
-	@http https://circleci.com/api/v1.1/project/github/${REPO} | jq '.[0].build_num' > .circleci/build_num
-
-ci-size: ci-build
-	@echo "===> Getting image build size from CircleCI"
-	@http "$(shell http https://circleci.com/api/v1.1/project/github/${REPO}/$(shell cat .circleci/build_num)/artifacts circle-token==${CIRCLE_TOKEN} | jq '.[].url')" > .circleci/SIZE
 
 clean: ## Clean docker image and stop all running containers
 	docker-clean stop

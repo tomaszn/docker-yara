@@ -28,10 +28,12 @@ ghcr.io/tomaszn/docker-yara:4-w-rules    66MB
 ## Getting Started
 
 ```bash
-$ docker run --rm -v /path/to/rules:/rules:ro \
-                  -v /path/to/malware:/malware:ro \
-                  ghcr.io/tomaszn/docker-yara:4 /rules/RULES_FILE FILE
+$ docker run --rm -v "$PWD"/rules:/rules:ro -v "$PWD"/malware:/malware:ro ghcr.io/tomaszn/docker-yara:4 /rules/RULES_FILE SAMPLE_FILE
 ```
+
+`SAMPLE_FILE` can be a HTTP/HTTPS URL, in that case it will be downloaded.
+
+If `SAMPLE_FILE` is a Zip file or a Chrome extension, it will be unarchived before scanning.
 
 ```
 YARA 4.0.5, the pattern matching swiss army knife.
@@ -70,7 +72,7 @@ Mandatory arguments to long options are mandatory for short options too.
 Send bug reports and suggestions to: vmalvarez@virustotal.com.
 ```
 
-Add the following to your bash or zsh profile
+Add the following to your bash or zsh profile to simply run "yara" command:
 
 ```bash
 alias yara='docker run -it --rm -v $(pwd):/malware:ro ghcr.io/tomaszn/docker-yara:4 $@'
@@ -90,4 +92,4 @@ Find a bug? Want more features? Find something missing in the documentation? Let
 
 ## License
 
-MIT Copyright (c) 2014 **blacktop**
+MIT Copyright (c) 2014 **blacktop**, modified by (c) 2021 **tomaszn**

@@ -34,7 +34,7 @@ $ docker run --rm -v /path/to/rules:/rules:ro \
 ```
 
 ```
-YARA 4.0.2, the pattern matching swiss army knife.
+YARA 4.0.5, the pattern matching swiss army knife.
 Usage: yara [OPTION]... [NAMESPACE:]RULES_FILE... FILE | DIR | PID
 
 Mandatory arguments to long options are mandatory for short options too.

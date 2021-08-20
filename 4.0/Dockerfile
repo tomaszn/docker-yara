@@ -2,8 +2,8 @@ FROM alpine:3.14.1
 
 LABEL maintainer "https://github.com/tomaszn"
 
-ENV YARA_VERSION 4.0.2
-ENV YARA_PY_VERSION 4.0.2
+ENV YARA_VERSION 4.0.5
+ENV YARA_PY_VERSION 4.0.5
 
 # packages that are left in the image
 RUN apk add --no-cache openssl file jansson bison python3 unzip tini su-exec

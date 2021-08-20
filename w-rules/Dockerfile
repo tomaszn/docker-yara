@@ -1,11 +1,14 @@
-FROM alpine:3.14
+FROM alpine:3.14.1
 
-LABEL maintainer "https://github.com/blacktop"
+LABEL maintainer "https://github.com/tomaszn"
 
 ENV YARA_VERSION 4.1.2
 ENV YARA_PY_VERSION 4.1.2
 
-RUN apk add --no-cache openssl file jansson bison python3 tini su-exec
+# packages that are left in the image
+RUN apk add --no-cache openssl file jansson bison python3 unzip tini su-exec
+
+# packages that are removed after building YARA
 RUN apk add --no-cache -t .build-deps py3-setuptools \
   openssl-dev \
   jansson-dev \
@@ -17,7 +20,6 @@ RUN apk add --no-cache -t .build-deps py3-setuptools \
   autoconf \
   libtool \
   flex \
-  git \
   git \
   && set -x \
   && echo "Install Yara from source..." \
@@ -51,5 +53,12 @@ VOLUME ["/rules"]
 
 WORKDIR /malware
 
-ENTRYPOINT ["su-exec","nobody","/sbin/tini","--","yara"]
+ADD maybe_unzip_to_tmp /
+
+# use this ENTRYPOINT to simply run YARA
+#ENTRYPOINT ["yara"]
+
+# use this ENTRYPOINT to unzip the sample if it is "application/zip"
+ENTRYPOINT ["/maybe_unzip_to_tmp"]
+
 CMD ["--help"]

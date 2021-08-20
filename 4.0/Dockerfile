@@ -1,4 +1,4 @@
-FROM alpine:3.12
+FROM alpine:3.14.1
 
 LABEL maintainer "https://github.com/tomaszn"
 

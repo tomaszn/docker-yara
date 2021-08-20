@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# we need to remove the last argument in a POSIX-shell compatible way,
+# so let's reverse args, shift, and reverse again
+flag=''; for a in "$@"; do set -- "$a" ${flag-"$@"}; unset flag; done
+last="$1"
+shift
+flag=''; for a in "$@"; do set -- "$a" ${flag-"$@"}; unset flag; done
+other=$*
+
+case "$last" in
+    "http"*) wget -O /var/tmp/downloaded "$last" && last="/var/tmp/downloaded"
+esac
+
+mime_type=$(file --brief --mime-type "$last")
+if [ "application/zip" = "$mime_type" -o "application/x-chrome-extension" = "$mime_type" ]; then
+    unzip -q -d /tmp -- "$last"
+    # make the last argument point to the place with extracted files
+    last=/tmp
+fi
+yara --recursive $other "$last"

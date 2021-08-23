@@ -14,8 +14,12 @@ esac
 
 mime_type=$(file --brief --mime-type "$last")
 if [ "application/zip" = "$mime_type" -o "application/x-chrome-extension" = "$mime_type" ]; then
-    unzip -q -d /tmp -- "$last"
+    echo "Extracting $last"
+    yara_extracted=1
+    extract_dir=$(mktemp -d)
+    unzip -q -d $extract_dir -- "$last"
     # make the last argument point to the place with extracted files
-    last=/tmp
+    last=$extract_dir
 fi
 yara --recursive $other "$last"
+if [ "x${yara_extracted}" = "x1" ]; then rm -r "$extract_dir"; fi

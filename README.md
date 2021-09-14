@@ -33,7 +33,7 @@ $ docker run --rm -v "$PWD"/rules:/rules:ro -v "$PWD"/malware:/malware:ro ghcr.i
 
 `SAMPLE_FILE` can be a HTTP/HTTPS URL, in that case it will be downloaded.
 
-If `SAMPLE_FILE` is a Zip file or a Chrome extension, it will be unarchived before scanning.
+If `SAMPLE_FILE` is a Zip file or a Chrome extension, it will be unarchived before scanning. If `ARCHIVE_DIR_SUFFIX` environment variable is provided, then it will be used in `mktemp -d --suffix=...`, so Yara output will contain this string in the path of the file (useful if many files are scanned).
 
 ```
 YARA 4.0.5, the pattern matching swiss army knife.

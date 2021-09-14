@@ -16,7 +16,7 @@ mime_type=$(file --brief --mime-type "$last")
 if [ "application/zip" = "$mime_type" -o "application/x-chrome-extension" = "$mime_type" ]; then
     echo "Extracting $last"
     yara_extracted=1
-    extract_dir=$(mktemp -d)
+    extract_dir=$(mktemp -d --suffix="${ARCHIVE_DIR_SUFFIX:-ARCH}")
     unzip -q -d $extract_dir -- "$last"
     # make the last argument point to the place with extracted files
     last=$extract_dir

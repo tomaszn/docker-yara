@@ -6,7 +6,8 @@ ENV YARA_VERSION 4.1.2
 ENV YARA_PY_VERSION 4.1.2
 
 # packages that are left in the image
-RUN apk add --no-cache openssl file jansson bison python3 unzip tini su-exec
+RUN apk add --no-cache openssl file jansson bison python3 unzip tini su-exec \
+  coreutils # for advanced mktemp
 
 # packages that are removed after building YARA
 RUN apk add --no-cache -t .build-deps py3-setuptools \
